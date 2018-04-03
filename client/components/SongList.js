@@ -6,15 +6,34 @@ import {graphql} from 'react-apollo';
 
 //用类模式来创建组件是想要获得更多的内建方法
 class SongList extends Component {
+
+  renderSongs(){
+    //这个地方的map可能会出错，原因是query要花一定的时间来返回数据，返回之前songs是没有东西的！
+    //别忘了每一个react的列表需要key,这个地方我们用song的id
+    return this.props.data.songs.map(song => {
+      return (
+        <li key={song.id} className="collection-item">
+          {song.title}
+        </li>
+      );
+    });
+  }
+
+
+
   render(){
     //可能会有两个输出，一个是没有query数据前的组件渲染，一个是得到query后的组件属性渲染
-    console.log(this.props);
+ //   console.log(this.props);
 
+    //如果query没有完成，就渲染下面的组件
+    if(this.props.data.lodaing){return <div>
+      Loading...
+    </div>}
 
     return(
-      <div>
-        SongList
-      </div>
+      <ul className="collection">
+        {this.renderSongs()}
+      </ul>
     );
   }
 }
@@ -22,6 +41,7 @@ class SongList extends Component {
 const query = gql`
   {
     songs{
+      id
       title
     }
   }
