@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import gql from 'graphql-tag';
 //是react和apollo 之间的胶水
 import {graphql} from 'react-apollo';
+import {Link} from 'react-router';
 
 //用类模式来创建组件是想要获得更多的内建方法
 class SongList extends Component {
@@ -31,9 +32,14 @@ class SongList extends Component {
     </div>}
 
     return(
+      <div>
       <ul className="collection">
         {this.renderSongs()}
       </ul>
+      <Link to="/songs/new" className="btn-floating btn-large red right">
+        <i className="material-icons">add</i>
+      </Link>
+      </div>
     );
   }
 }
