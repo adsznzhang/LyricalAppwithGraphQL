@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {Link, hashHistory} from 'react-router';
+import query from '../queries/fetchSongs.js';
 
 
 class SongCreate extends Component {
@@ -18,8 +19,12 @@ class SongCreate extends Component {
     this.props.mutate({
       variables:{
         title: this.state.title
-      }
-    }).then(() => 
+      },
+      //修改后，让apoll store进行数据调取
+      refetchQueries: [{
+        query: query
+      }]
+    }).then(() =>
       //react的路由会记录下用户的浏览历史，通过hashHistory可以进行访问
       hashHistory.push('/')
     )
