@@ -9,6 +9,10 @@ import query from '../queries/fetchSongs.js';
 //用类模式来创建组件是想要获得更多的内建方法
 class SongList extends Component {
 
+  onSongDelete(id){
+    this.props.mutate({variables: {id}});
+  }
+
   renderSongs(){
     //这个地方的map可能会出错，原因是query要花一定的时间来返回数据，返回之前songs是没有东西的！
     //别忘了每一个react的列表需要key,这个地方我们用song的id
@@ -16,6 +20,8 @@ class SongList extends Component {
       return (
         <li key={song.id} className="collection-item">
           {song.title}
+
+          <i className="material-icons" onClick={() => this.onSongDelete(song.id)}>delete</i>
         </li>
       );
     });
@@ -45,15 +51,19 @@ class SongList extends Component {
   }
 }
 
-/* const query = gql`
- *   {
- *     songs{
- *       id
- *       title
- *     }
- *   }
- * `;
- * */
+const mutation = gql `
+mutation DeleteSong($id: ID){
+deleteSong(id: $id){
+id
+}
+}
+`
+
+
+
 //graphql()返回一个函数并把SongList当作参数执行,把query返回的数据加载到组件的props对象上面，可以通过consol.log(this.props)来查看下
-export default graphql(query)(SongList);
+
+
+//目前graphql只能接受一个参数。。。所以要分开运行两次
+export default graphql(mutation)( graphql(query)(SongList));
 
