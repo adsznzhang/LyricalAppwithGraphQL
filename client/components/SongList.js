@@ -10,7 +10,8 @@ import query from '../queries/fetchSongs.js';
 class SongList extends Component {
 
   onSongDelete(id){
-    this.props.mutate({variables: {id}});
+    //react-apollo 库会把data加载到组件属性里
+    this.props.mutate({variables: {id}}).then(() => this.props.data.refetch());
   }
 
   renderSongs(){
