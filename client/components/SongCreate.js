@@ -21,6 +21,7 @@ class SongCreate extends Component {
         title: this.state.title
       },
       //修改后，让apoll store进行数据调取
+      //不能用data.refetch的原因是要在songlist组件里更新，而不是songcreate组件更新
       refetchQueries: [{
         query: query
       }]
