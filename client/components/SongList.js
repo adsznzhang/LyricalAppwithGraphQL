@@ -17,12 +17,12 @@ class SongList extends Component {
   renderSongs(){
     //这个地方的map可能会出错，原因是query要花一定的时间来返回数据，返回之前songs是没有东西的！
     //别忘了每一个react的列表需要key,这个地方我们用song的id
-    return this.props.data.songs.map(song => {
+    return this.props.data.songs.map(({id, title}) => {
       return (
-        <li key={song.id} className="collection-item">
-          {song.title}
+        <li key={id} className="collection-item">
+          <Link to={`/songs/${id}`}>{title}</Link>
 
-          <i className="material-icons" onClick={() => this.onSongDelete(song.id)}>delete</i>
+          <i className="material-icons" onClick={() => this.onSongDelete(id)}>delete</i>
         </li>
       );
     });
