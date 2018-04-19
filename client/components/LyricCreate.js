@@ -40,14 +40,15 @@ class LyricCreate extends Component {
 }
 //可以通过develeptool里面的network 显示出现的错误
 const mutation = gql`
-mutation AddLyricToSong($content: String, $songId: ID){
-addLyricToSong(content:$content, songId: $songId){
-id
-lyrics{
-content
-}
-}
-}
+  mutation AddLyricToSong($content: String, $songId: ID){
+    addLyricToSong(content:$content, songId: $songId){
+      id
+      lyrics{
+        id
+        content
+      }
+    }
+  }
 `;
 
 

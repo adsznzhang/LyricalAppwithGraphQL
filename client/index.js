@@ -13,7 +13,12 @@ import SongDetail from './components/SongDetail.js';
 //Apollo store可以想象成客户端存储的数据
 //Apollo provider把来自Apollo store的数据传递给客户端
 
-const client = new ApolloClient({});
+//添加一个配置来让apoll看到具体id 数据的变化从而重新渲染组件
+const client = new ApolloClient({
+  //所有apollo里面的数据都会通过这个函数来添加一个属性,让apollo来鉴别不同数据
+  //可以去dev.apollodata.com/react/cache-updates.html看官方文档
+  dataIdFromObject: o => o.id
+});
 
 
 //在URL里面定义参数id songs/:id
